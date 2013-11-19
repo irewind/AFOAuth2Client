@@ -93,7 +93,7 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
 {
     // See http://tools.ietf.org/html/rfc6749#section-7.1
     if ([[type lowercaseString] isEqualToString:@"bearer"]) {
-        [self setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"Bearer %@", token]];
+        [self setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"bearer %@", token]];
     }
 }
 
@@ -163,8 +163,8 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
                                failure:(void (^)(NSError *error))failure
 {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-//    [mutableParameters setObject:self.clientID forKey:@"client_id"];
-//    [mutableParameters setValue:self.secret forKey:@"client_secret"];
+    [mutableParameters setObject:self.clientID forKey:@"client_id"];
+    [mutableParameters setValue:self.secret forKey:@"client_secret"];
     parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
 
     NSMutableURLRequest *mutableRequest = [self requestWithMethod:@"POST" path:path parameters:parameters];
