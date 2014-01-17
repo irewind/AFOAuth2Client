@@ -80,7 +80,7 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
 
 - (void)setAuthorizationHeaderWithToken:(NSString *)token {
     // Use the "Bearer" type as an arbitrary default
-    [self setAuthorizationHeaderWithToken:token ofType:@"Bearer"];
+    [self setAuthorizationHeaderWithToken:token ofType:@"bearer"];
 }
 
 - (void)setAuthorizationHeaderWithCredential:(AFOAuthCredential *)credential {
@@ -93,7 +93,7 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
     // See http://tools.ietf.org/html/rfc6749#section-7.1
     if ([[type lowercaseString] isEqualToString:@"bearer"]) {
         AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
-        [serializer setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+        [serializer setValue:[NSString stringWithFormat:@"bearer %@", token] forHTTPHeaderField:@"Authorization"];
         self.requestSerializer = serializer;
         
     }
@@ -172,7 +172,14 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
     
     self.requestSerializer = [AFHTTPRequestSerializer serializer];
     
-    NSMutableURLRequest *mutableRequest = [self.requestSerializer requestWithMethod:@"POST" URLString:urlString parameters:parameters];
+    NSString* finalString = urlString;
+    if (self.baseURL != nil)
+    {
+        NSURL* url = [self.baseURL URLByAppendingPathComponent:urlString];
+        finalString = [url absoluteString];
+    }
+    
+    NSMutableURLRequest *mutableRequest = [self.requestSerializer requestWithMethod:@"POST" URLString:finalString parameters:parameters];
     [mutableRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     AFHTTPRequestOperation *requestOperation = [self HTTPRequestOperationWithRequest:mutableRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if ([responseObject valueForKey:@"error"]) {
