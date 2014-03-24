@@ -27,7 +27,7 @@
 NSString * const kAFOAuthCodeGrantType = @"authorization_code";
 NSString * const kAFOAuthClientCredentialsGrantType = @"client_credentials";
 NSString * const kAFOAuthPasswordCredentialsGrantType = @"password";
-NSString *const kAFOAuthPasswordCredentialsResponseType = @"code";
+NSString * const kAFOAuthPasswordCredentialsResponseType = @"code";
 NSString * const kAFOAuthRefreshGrantType = @"refresh_token";
 
 #ifdef _SECURITY_SECITEM_H_
@@ -44,9 +44,9 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
 #pragma mark -
 
 @interface AFOAuth2Client ()
-@property (readwrite, nonatomic) NSString *serviceProviderIdentifier;
-@property (readwrite, nonatomic) NSString *clientID;
-@property (readwrite, nonatomic) NSString *secret;
+@property (readwrite, nonatomic) NSString * serviceProviderIdentifier;
+@property (readwrite, nonatomic) NSString * clientID;
+@property (readwrite, nonatomic) NSString * secret;
 @end
 
 @implementation AFOAuth2Client
